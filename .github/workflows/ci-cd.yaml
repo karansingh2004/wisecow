@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Wisecow CI/CD
 
 on:
   push:
@@ -11,18 +11,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and push image
+
+      - name: Build and push Docker image
         run: |
-          docker build -t <docker-image-name>.
-          docker push <docker-image-name>
+          docker build -t karansingh2004/wisecow:latest .
+          docker push karansingh2004/wisecow:latest
+
       - name: Deploy to Kubernetes
         uses: kubernetes/deploy-action@v1
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
           deployment: wisecow-app
-          image: <docker-image-name>
+          image: karansingh2004/wisecow:latest
