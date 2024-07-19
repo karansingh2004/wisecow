@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 # Install dependencies
-RUN apt-get update && apt-get install -y cowsay fortune netcat
+RUN apt-get update && apt install fortune-mod cowsay -y
 
 # Copy the wisecow.sh file
 COPY wisecow.sh /app/wisecow.sh
